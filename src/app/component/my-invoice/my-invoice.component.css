@@ -1,0 +1,56 @@
+
+
+.main-pdf{
+  border: 1px solid rgb(199, 110, 110);
+  /* padding: 5px; */
+}
+
+.company_name {
+
+  font-size: 75px;
+}
+
+.address{
+  font-size: 21px;
+  text-decoration: underline;
+}
+
+.deals{
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+.department{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.customer_details{
+  /* border: 1px solid black; */
+  padding: 10px;
+  /* background-color: antiquewhite; */
+}
+
+
+.no_border{
+  border: 1px solid white;
+}
+
+.decoration{
+  text-decoration: dotted,underline;
+}
+
+.company_details{
+  background-color: rgb(211, 204, 204);
+}
+
+
+.condition{
+  font-size: 12px;
+  font-weight: bold;
+}

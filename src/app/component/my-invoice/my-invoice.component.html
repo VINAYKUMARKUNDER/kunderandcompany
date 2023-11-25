@@ -1,0 +1,293 @@
+<!-- customer details -->
+<div class="container mt-5" *ngIf="!customer_submit_status">
+  <h2>Customer Details:</h2>
+  <form (ngSubmit)="addCustomerDetails()">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="customerName">Customer Name <sup class="text-danger">**</sup></label>
+        <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Enter customer name"
+          [(ngModel)]="customer.customerName" required>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="mobileNumber">Mobile Number<sup class="text-danger">**</sup></label>
+        <input type="tel" class="form-control" id="mobileNumber" name="mobileNumber" placeholder="Enter mobile number"
+          [(ngModel)]="customer.mobileNumber" required>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="address">Address<sup class="text-danger">**</sup></label>
+        <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter address"
+          [(ngModel)]="customer.address" required></textarea>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="gst">GST</label>
+        <input type="text" class="form-control" id="gst" name="gst" placeholder="Enter GST" [(ngModel)]="customer.gst"
+          required>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="state">State</label>
+        <input type="text" class="form-control" id="state" name="state" placeholder="Enter state"
+          [(ngModel)]="customer.state" required>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="stateCode">State Code</label>
+        <input type="text" class="form-control" id="stateCode" name="stateCode" placeholder="Enter state code"
+          [(ngModel)]="customer.stateCode" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="placeOfSupply">Place of Supply <sup class="text-danger">**</sup></label>
+      <textarea class="form-control" id="placeOfSupply" name="placeOfSupply" [(ngModel)]="customer.placeOfSupply"
+        required rows="3" placeholder="Enter Place" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+
+<!-- customer details print -->
+<div class="container" *ngIf="customer_submit_status">
+  <h4>Customer Name: {{customer.customerName}}</h4>
+  <h6> Customer Address: {{customer.address}}</h6>
+  <h6>Mobile: {{customer.mobileNumber}}</h6>
+  <p>State & state code: {{customer.state}}, {{customer.stateCode}}</p>
+  <p>Supply Place: {{customer.placeOfSupply}}</p>
+
+  <button class="btn btn-info" (click)="customer_submit_status=false">Edit </button>
+</div>
+
+<!-- product details  -->
+<div class="container mt-5">
+  <h4 class="text-info">Products item:</h4>
+
+
+  <!-- Product Cart -->
+  <table class="table mt-3" *ngIf="cart.length > 0">
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>HSN Code</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Total Amount</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of cart; let i = index">
+        <td>{{ product.productName }}</td>
+        <td>{{ product.hsnCode }}</td>
+        <td>{{ product.qty }}</td>
+        <td>{{ product.rate }}</td>
+        <td>{{ product.totalAmount }}</td>
+        <td>
+          <button type="button" class="btn btn-warning btn-sm" (click)="editProduct(i)">Edit</button>
+          <button type="button" class="btn btn-danger btn-sm" (click)="removeProduct(i)">Remove</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Add Product Form -->
+  <form (ngSubmit)="addProduct()" #productForm="ngForm">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="productName">Product Name</label>
+        <input type="text" class="form-control" id="productName" name="productName" [(ngModel)]="newProduct.productName"
+          required>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="hsnCode">HSN Code</label>
+        <input type="text" class="form-control" id="hsnCode" name="hsnCode" [(ngModel)]="newProduct.hsnCode" required>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="qty">Quantity</label>
+        <input type="number" class="form-control" id="qty" name="qty" [(ngModel)]="newProduct.qty" required>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="rate">Rate</label>
+        <input type="number" class="form-control" id="rate" name="rate" [(ngModel)]="newProduct.rate" required>
+      </div>
+
+    </div>
+    <button type="submit" class="btn btn-success">Add Product</button>
+  </form>
+</div>
+
+
+<!-- gst  -->
+<div class="container mt-5">
+  <div class="form-row">
+    <div class="form-group col-md-4">
+      <!-- <label for="customerName">Select Gst <sup class="text-danger">**</sup></label> -->
+      <label for="customerName">Select Gst <sup class="text-danger">**</sup></label>
+      <select class="form-control" id="placeOfSupply" [(ngModel)]="gst_rate" required>
+        <option value="" disabled selected>Select Gst:</option>
+        <option *ngFor="let gstRate of gstRates" [value]="gstRate" >{{ gstRate }}%</option>
+      </select>
+
+      <button class="btn btn-success mt-3" (click)="calculate_price(); genrate_status = true">Genrate invoice</button>
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- genrate invoice -->
+<div class="container mt-5" *ngIf="genrate_status">
+
+  <div #invoiceContainer class="main-pdf">
+    <div class="company_details">
+      <div class="row text-center mb-2">
+        <div class="col-4 mt-3">
+          <h5>GSTIN No.: {{company.gst}}</h5>
+        </div>
+        <div class="col-4 mt-3">
+          <h5>{{company.invoice_type}}</h5>
+        </div>
+        <div class="col-4 mt-3">
+          <h5>Mob: {{company.mobile}}</h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 text-center">
+          <h2 class="company_name">{{company.company_name}}</h2>
+          <h6 class="address">Add. {{company.address}}</h6>
+          <h6 class="deals">Deals in: {{company.deals_in}}</h6>
+          <h5 class="department">{{company.department}}</h5>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="customer_details">
+      <div class="row">
+        <div class="col-6">
+          <div class="row ml-3">
+            <div class="col-5">
+              <h6> GSTIN No.: {{company.gst}} </h6>
+            </div>
+            <div class="col-5">
+              <h6> State code: {{company.state_code}} </h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="row">
+            <div class=" text-left col-5">Tax Invoice No: <b> {{invoice_number}} </b></div>
+            <div class=" text-right col-5"> Invoce Date: {{ date}} </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container row">
+        <div class="col-6">
+          <h5>Name: <b class="decoration text-info">{{customer.customerName}}</b></h5>
+          <h5>Address: <b class="decoration text-info">{{customer.address}}</b></h5>
+        </div>
+        <div class="col-6">
+          <h6>Mobile No.: {{customer.mobileNumber}}</h6>
+          <h6>GSTIN: {{customer.gst}}</h6>
+          <div class="row">
+            <div class="col-5 text-left">State: {{customer.state}}</div>
+            <div class="col-5 text-right">State Code: {{customer.stateCode}}</div>
+          </div>
+          <h6>Palce Of Supply: {{customer.placeOfSupply}}</h6>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="">
+
+    <table class="table mt-5 container">
+      <thead >
+        <tr class="bg-info">
+          <th>Sr. No. </th>
+          <th>Product Name: </th>
+          <th>QTY</th>
+          <th>Rate</th>
+          <th>Total Amount</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let crt of cart; ">
+          <td>1</td>
+          <td>{{crt.productName}}</td>
+          <td>{{crt.qty}}</td>
+          <td>{{crt.rate}}</td>
+          <td>{{crt.totalAmount}}</td>
+        </tr>
+      </tbody>
+      <br><br>
+    </table>
+    <hr>
+
+
+    <div class="row mt-5">
+      <div class="col-6">
+        <h5 class="text-center text-danger">Terms & condisition</h5>
+
+
+
+        <ul class="condition">
+          <li>Delivery:   20 to 25 days after receving PO & advance</li>
+          <li>Paymnet Shedule: 40% Advance & Balance against delivery</li>
+          <li>Duties/Taxes:   As applicable</li>
+          <li>Loading/Unloding:   Extra</li>
+        </ul>
+
+      </div>
+      <div class="col-4 text-right">
+          <h5>GST Tax: {{gst_rate}}%</h5>
+          <h5>Total Amount: {{amount_calcu.total_amount}}</h5>
+          <h5>GST Tax Amount: {{amount_calcu.total_gst_amount}}</h5>
+          <h5>Total Amount With Tax: {{amount_calcu.total_amount_with_text}}</h5>
+      </div>
+      <div class="col-2"></div>
+    </div>
+
+
+    <div>
+      <h4 class="text-center">Bank Details:</h4>
+     <table class="table text-center container">
+        <tr>
+          <th>Bank Name: <br> {{bank_data.bank_name}}</th>
+          <th>IFSC Code: <br> {{bank_data.ifsc_code}}</th>
+          <th>Account: <br> {{bank_data.bank_ac}}</th>
+
+        </tr>
+     </table>
+    </div>
+
+
+    <div>
+      <div class="row mb-5">
+        <div class="col-1"></div>
+        <div class="col-5 text-left">
+          <h4>E. & O.E.</h4>
+          <h6>subject to pryagraj jurisdiction only</h6>
+        </div>
+        <div class="col-5 text-right">
+          <h6>For: {{company.company_name}}</h6>
+          <h6>Authorized Signature</h6>
+         </div>
+        <div class="col-1"></div>
+
+      </div>
+    </div>
+
+
+
+
+  </div>
+  <div class="mt-4">
+    <button class="btn btn-primary" (click)="printInvoice()">Print Invoice</button>
+    <button class="btn btn-success ml-2" (click)="downloadInvoice()">Download PDF</button>
+  </div>
+</div>
