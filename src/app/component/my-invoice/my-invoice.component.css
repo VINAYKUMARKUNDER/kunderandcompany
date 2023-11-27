@@ -2,6 +2,7 @@
 
 .main-pdf{
   border: 1px solid rgb(199, 110, 110);
+  margin: 5px;
   /* padding: 5px; */
 }
 
@@ -46,11 +47,22 @@ table, th, td {
 }
 
 .company_details{
-  background-color: rgb(211, 204, 204);
+  background-color: rgb(227, 209, 209);
 }
 
 
 .condition{
   font-size: 12px;
   font-weight: bold;
+  margin-left: 10px;
+}
+
+
+.border-customer{
+  border: 1px solid black;
+}
+
+.border-price{
+  border: 1px solid black;
+
 }

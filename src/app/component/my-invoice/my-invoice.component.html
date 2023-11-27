@@ -125,7 +125,7 @@
       <label for="customerName">Select Gst <sup class="text-danger">**</sup></label>
       <select class="form-control" id="placeOfSupply" [(ngModel)]="gst_rate" required>
         <option value="" disabled selected>Select Gst:</option>
-        <option *ngFor="let gstRate of gstRates" [value]="gstRate" >{{ gstRate }}%</option>
+        <option *ngFor="let gstRate of gstRates" [value]="gstRate">{{ gstRate }}%</option>
       </select>
 
       <button class="btn btn-success mt-3" (click)="calculate_price(); genrate_status = true">Genrate invoice</button>
@@ -137,7 +137,7 @@
 
 
 <!-- genrate invoice -->
-<div class="container mt-5" *ngIf="genrate_status">
+<div class="container m-5" *ngIf="genrate_status">
 
   <div #invoiceContainer class="main-pdf">
     <div class="company_details">
@@ -164,8 +164,8 @@
 
     </div>
 
-    <div class="customer_details">
-      <div class="row">
+    <div class="customer_details container-fluid">
+      <div class="row ">
         <div class="col-6">
           <div class="row ml-3">
             <div class="col-5">
@@ -176,7 +176,7 @@
             </div>
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-6 ">
           <div class="row">
             <div class=" text-left col-5">Tax Invoice No: <b> {{invoice_number}} </b></div>
             <div class=" text-right col-5"> Invoce Date: {{ date}} </div>
@@ -184,87 +184,98 @@
         </div>
       </div>
 
-      <div class="container row">
-        <div class="col-6">
-          <h5>Name: <b class="decoration text-info">{{customer.customerName}}</b></h5>
-          <h5>Address: <b class="decoration text-info">{{customer.address}}</b></h5>
-        </div>
-        <div class="col-6">
-          <h6>Mobile No.: {{customer.mobileNumber}}</h6>
-          <h6>GSTIN: {{customer.gst}}</h6>
-          <div class="row">
-            <div class="col-5 text-left">State: {{customer.state}}</div>
-            <div class="col-5 text-right">State Code: {{customer.stateCode}}</div>
+
+      <div class="container-fluid">
+
+        <div class=" row">
+          <div class="col-6 border-customer">
+            <h5>Name: <b class="decoration">{{customer.customerName}}</b></h5>
+            <h5>Address: <b class="decoration">{{customer.address}}</b></h5>
           </div>
-          <h6>Palce Of Supply: {{customer.placeOfSupply}}</h6>
+          <div class="col-6 border-customer">
+            <h6>Mobile No.: {{customer.mobileNumber}}</h6>
+            <h6>GSTIN: {{customer.gst}}</h6>
+            <div class="row">
+              <div class="col-6 text-left">State: {{customer.state}}</div>
+              <div class="col-6 text-right">State Code: {{customer.stateCode}}</div>
+            </div>
+            <h6>Palce Of Supply: {{customer.placeOfSupply}}</h6>
+          </div>
         </div>
+
       </div>
 
     </div>
 
     <hr class="">
 
-    <table class="table mt-5 container">
-      <thead >
-        <tr class="bg-info">
-          <th>Sr. No. </th>
-          <th>Product Name: </th>
-          <th>QTY</th>
-          <th>Rate</th>
-          <th>Total Amount</th>
-        </tr>
-      </thead>
+    <div class="container-fluid">
+      <table class="table text-center">
+        <thead>
+          <tr class="bg-info ">
+            <th>Sr.</th>
+            <th>Product Name: </th>
+            <th>HSN Code </th>
+            <th>QTY</th>
+            <th>Rate</th>
+            <th>Total Amount</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr *ngFor="let crt of cart; ">
-          <td>1</td>
-          <td>{{crt.productName}}</td>
-          <td>{{crt.qty}}</td>
-          <td>{{crt.rate}}</td>
-          <td>{{crt.totalAmount}}</td>
-        </tr>
-      </tbody>
-      <br><br>
-    </table>
+        <tbody>
+          <tr *ngFor="let crt of cart; let i = index ">
+            <td>{{i+1}}</td>
+            <td>{{crt.productName}}</td>
+            <td>{{crt.hsnCode}}</td>
+            <td>{{crt.qty}}</td>
+            <td>{{crt.rate.toFixed(2)}}</td>
+            <td>{{crt.totalAmount.toFixed(2)}}</td>
+          </tr>
+        </tbody>
+        <br><br>
+      </table>
+    </div>
     <hr>
 
 
-    <div class="row mt-5">
-      <div class="col-6">
+    <div class="row m-1 container-fluid">
+
+      <div class="col-6 border-price">
         <h5 class="text-center text-danger">Terms & condisition</h5>
 
 
 
-        <ul class="condition">
-          <li>Delivery:   20 to 25 days after receving PO & advance</li>
+        <ul class="condition ">
+          <li>Delivery: 20 to 25 days after receving PO & advance</li>
           <li>Paymnet Shedule: 40% Advance & Balance against delivery</li>
-          <li>Duties/Taxes:   As applicable</li>
-          <li>Loading/Unloding:   Extra</li>
+          <li>Duties/Taxes: As applicable</li>
+          <li>Loading/Unloding: Extra</li>
         </ul>
 
       </div>
-      <div class="col-4 text-right">
-          <h5>GST Tax: {{gst_rate}}%</h5>
-          <h5>Total Amount: {{amount_calcu.total_amount}}</h5>
-          <h5>GST Tax Amount: {{amount_calcu.total_gst_amount}}</h5>
-          <h5>Total Amount With Tax: {{amount_calcu.total_amount_with_text}}</h5>
+      <div class="col-6 text-right  border-price">
+        <h5>GST Tax: {{gst_rate}}%</h5>
+        <h5>Total Amount: {{amount_calcu.total_amount.toFixed(2)}}</h5>
+        <h5>GST Tax Amount: {{amount_calcu.total_gst_amount.toFixed(2)}}</h5>
+        <h5>Total Amount With Tax: {{amount_calcu.total_amount_with_text.toFixed(2)}}</h5>
       </div>
-      <div class="col-2"></div>
+
     </div>
 
 
-    <div>
+    <div class="container-fluid">
+
       <h4 class="text-center">Bank Details:</h4>
-     <table class="table text-center container">
+      <table class="table text-center ">
         <tr>
           <th>Bank Name: <br> {{bank_data.bank_name}}</th>
           <th>IFSC Code: <br> {{bank_data.ifsc_code}}</th>
           <th>Account: <br> {{bank_data.bank_ac}}</th>
 
         </tr>
-     </table>
-    </div>
+      </table>
 
+    </div>
 
     <div>
       <div class="row mb-5">
@@ -276,7 +287,7 @@
         <div class="col-5 text-right">
           <h6>For: {{company.company_name}}</h6>
           <h6>Authorized Signature</h6>
-         </div>
+        </div>
         <div class="col-1"></div>
 
       </div>

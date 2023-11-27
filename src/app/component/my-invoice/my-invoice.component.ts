@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { InvoiceServiceService } from 'src/app/service/invoice-service.service';
 
 
 
@@ -16,6 +17,8 @@ export class MyInvoiceComponent implements OnInit {
   ngOnInit(): void {
 
   }
+
+
 
   company = {
     gst: '09DULPS6670G2ZV',
@@ -143,7 +146,7 @@ export class MyInvoiceComponent implements OnInit {
 
 
 
-  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2) { }
+  constructor(private sanitizer: DomSanitizer, private renderer: Renderer2,private pdfGeneratorService: InvoiceServiceService) { }
   @ViewChild('invoiceContainer') invoiceContainer!: ElementRef;
 
   getFormattedDate(): string {
@@ -159,6 +162,11 @@ export class MyInvoiceComponent implements OnInit {
 
   // Print the invoice
   printInvoice(): void {
+
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleString(); // Format the date as a string
+
+    const fileName = `Invoice_${formattedDate}`;
     const printWindow = window.open('', '_blank');
 
     if (printWindow) {
@@ -168,8 +176,8 @@ export class MyInvoiceComponent implements OnInit {
 
 
     .main-pdf{
-      border: 1px solid rgb(199, 110, 110);
-      /* padding: 5px; */
+      border: 2px solid rgb(199, 110, 110);
+
     }
 
     .company_name {
@@ -222,6 +230,15 @@ export class MyInvoiceComponent implements OnInit {
       font-weight: bold;
     }
 
+    .border-customer{
+      border: 1px solid black;
+    }
+
+    .border-price{
+      border: 1px solid black;
+
+    }
+
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
@@ -245,6 +262,7 @@ export class MyInvoiceComponent implements OnInit {
 
     <title>Print</title></head><body>`);
       printWindow.document.write(this.invoiceContainer.nativeElement.innerHTML);
+
       printWindow.document.write('</body></html>');
       printWindow.document.close();
       printWindow.print();
@@ -255,7 +273,7 @@ export class MyInvoiceComponent implements OnInit {
   }
 
   // Download the invoice as a PDF
-  downloadInvoice(): void {
+  downloadInvoice1(): void {
 
 
 
@@ -321,6 +339,15 @@ table, th, td {
   font-weight: bold;
 }
 
+
+.border-customer{
+  border: 1px solid black;
+}
+
+.border-price{
+  border: 1px solid black;
+
+}
       </style>
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
@@ -345,7 +372,7 @@ table, th, td {
       <title>Download</title></head><body>`);
       // console.log(this.invoiceContainer.nativeElement.innerHTML)
       pdfWindow.document.write(this.invoiceContainer.nativeElement.innerHTML);
-      pdfWindow.document.write('</body></html>');
+      pdfWindow.document.write(`</body></html>`);
       pdfWindow.document.close();
       const pdfData = 'data:application/pdf;base64,' + btoa(pdfWindow.document.documentElement.outerHTML);
       const downloadLink = this.renderer.createElement('a');
@@ -364,6 +391,114 @@ table, th, td {
       alert('something is worng..')
     }
 
+  }
+
+  downloadInvoice(): void {
+
+  const htmlData  = `<html><head>
+      <style>
+
+
+.main-pdf{
+  border: 1px solid rgb(199, 110, 110);
+  margin: 5px;
+}
+
+.company_name {
+
+  font-size: 75px;
+}
+
+.address{
+  font-size: 21px;
+  text-decoration: underline;
+}
+
+.deals{
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+.department{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.customer_details{
+  /* border: 1px solid black; */
+  padding: 10px;
+  /* background-color: antiquewhite; */
+}
+
+
+.no_border{
+  border: 1px solid white;
+}
+
+.decoration{
+  text-decoration: dotted,underline;
+}
+
+.company_details{
+  background-color: rgb(211, 204, 204);
+}
+
+
+.condition{
+  font-size: 12px;
+  font-weight: bold;
+}
+
+
+.border-customer{
+  border: 1px solid black;
+
+}
+
+.border-price{
+  border: 1px solid black;
+}
+      </style>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+      <link rel="icon" type="image/x-icon" href="favicon.ico">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+      <title>Download</title></head><body>
+
+
+      <div>${this.invoiceContainer.nativeElement.innerHTML}</div>
+
+      </body></html>
+
+      `
+
+      ;
+
+      const filename = `${this.customer.customerName} ${new Date().getUTCDate()}`
+
+
+    this.pdfGeneratorService.generatePdfFromHtml(htmlData,filename);
   }
 
 
