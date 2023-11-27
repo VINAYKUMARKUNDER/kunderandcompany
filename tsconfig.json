@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "typeRoots": ["node_modules/@types", "typings"],
+    "typeRoots": ["./typings", "./node_modules/@types"],
     "esModuleInterop": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
