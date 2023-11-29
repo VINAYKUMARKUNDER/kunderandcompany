@@ -70,7 +70,7 @@
         <th>Product Name</th>
         <th>HSN Code</th>
         <th>Quantity</th>
-        <th>Rate</th>
+        <th>Rate/Unit</th>
         <th>Total Amount</th>
         <th>Action</th>
       </tr>
@@ -80,7 +80,7 @@
         <td>{{ product.productName }}</td>
         <td>{{ product.hsnCode }}</td>
         <td>{{ product.qty }}</td>
-        <td>{{ product.rate }}</td>
+        <td>{{ product.rate}}/{{product.unit}}</td>
         <td>{{ product.totalAmount }}</td>
         <td>
           <button type="button" class="btn btn-warning btn-sm" (click)="editProduct(i)">Edit</button>
@@ -111,6 +111,11 @@
         <input type="number" class="form-control" id="rate" name="rate" [(ngModel)]="newProduct.rate" required>
       </div>
 
+      <div class="form-group col-md-2">
+        <label for="rate">Unit</label>
+        <input type="text" class="form-control" id="unit" name="unit" [(ngModel)]="newProduct.unit" required>
+      </div>
+
     </div>
     <button type="submit" class="btn btn-success">Add Product</button>
   </form>
@@ -120,6 +125,13 @@
 <!-- gst  -->
 <div class="container mt-5">
   <div class="form-row">
+    <div class="form-group col-md-4">
+      <!-- <label for="customerName">Select Gst <sup class="text-danger">**</sup></label> -->
+      <label for="customerName">Invoice Number <sup class="text-danger">**</sup></label>
+      <input type="number" class="form-control" id="invoice_no" name="invoice_no" [(ngModel)]="invoice_no" required
+        placeholder="Enter The Invoice Number">
+
+    </div>
     <div class="form-group col-md-4">
       <!-- <label for="customerName">Select Gst <sup class="text-danger">**</sup></label> -->
       <label for="customerName">Select Gst <sup class="text-danger">**</sup></label>
@@ -178,7 +190,7 @@
         </div>
         <div class="col-6 ">
           <div class="row">
-            <div class=" text-left col-6">Invoice No: <b> {{invoice_number}} </b></div>
+            <div class=" text-left col-6">Invoice No: <b> {{invoice_no}} </b></div>
             <div class=" text-right col-6"> Invoce Date: <b> {{ date}} </b></div>
           </div>
         </div>
@@ -215,7 +227,7 @@
             <th>Product Name: </th>
             <th class=" text-center">HSN Code </th>
             <th class=" text-center">QTY</th>
-            <th class=" text-center">Rate</th>
+            <th class=" text-center">Rate/Unit</th>
             <th class=" text-center"> Total Amount</th>
           </tr>
         </thead>
@@ -226,7 +238,7 @@
             <td>{{crt.productName}}</td>
             <td class="text-center">{{crt.hsnCode}}</td>
             <td class="text-center">{{crt.qty}}</td>
-            <td class="text-center">{{crt.rate.toFixed(2)}}</td>
+            <td class="text-center">{{crt.rate.toFixed(2)}}/{{crt.unit}}</td>
             <td class="text-center"> <b>{{crt.totalAmount.toFixed(2)}}</b></td>
           </tr>
         </tbody>

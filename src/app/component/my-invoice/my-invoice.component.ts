@@ -86,6 +86,7 @@ export class MyInvoiceComponent implements OnInit {
   newProduct: any = {};
   editingIndex: number | null = null;
   genrate_status: boolean = false;
+  invoice_no:number=0;
 
   amount_calcu = {
     total_amount: 0,
