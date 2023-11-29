@@ -146,7 +146,7 @@
           <h5>GSTIN No.: {{company.gst}}</h5>
         </div>
         <div class="col-4 mt-3">
-          <h5>{{company.invoice_type}}</h5>
+          <h5></h5>
         </div>
         <div class="col-4 mt-3">
           <h5>Mob: {{company.mobile}}</h5>
@@ -166,20 +166,20 @@
 
     <div class="customer_details container-fluid">
       <div class="row ">
-        <div class="col-6">
-          <div class="row ml-3">
-            <div class="col-5">
-              <h6> GSTIN No.: {{company.gst}} </h6>
+        <div class="col-6 company_gst">
+          <div class="row">
+            <div class="col-7">
+              <h6> GSTIN No.: <b>{{company.gst}}</b> </h6>
             </div>
-            <div class="col-5">
-              <h6> State code: {{company.state_code}} </h6>
+            <div class="col-4">
+              <h6> State code: <b> {{company.state_code}}</b> </h6>
             </div>
           </div>
         </div>
         <div class="col-6 ">
           <div class="row">
-            <div class=" text-left col-5">Tax Invoice No: <b> {{invoice_number}} </b></div>
-            <div class=" text-right col-5"> Invoce Date: {{ date}} </div>
+            <div class=" text-left col-6">Invoice No: <b> {{invoice_number}} </b></div>
+            <div class=" text-right col-6"> Invoce Date: <b> {{ date}} </b></div>
           </div>
         </div>
       </div>
@@ -193,13 +193,13 @@
             <h5>Address: <b class="decoration">{{customer.address}}</b></h5>
           </div>
           <div class="col-6 border-customer">
-            <h6>Mobile No.: {{customer.mobileNumber}}</h6>
-            <h6>GSTIN: {{customer.gst}}</h6>
+            <h6>Mobile No.: <b> {{customer.mobileNumber}} </b></h6>
+            <h6>GSTIN: <b>{{customer.gst}} </b></h6>
             <div class="row">
-              <div class="col-6 text-left">State: {{customer.state}}</div>
-              <div class="col-6 text-right">State Code: {{customer.stateCode}}</div>
+              <div class="col-6 text-left">State: <b>{{customer.state}} </b></div>
+              <div class="col-6 text-right">State Code: <b>{{customer.stateCode}} </b></div>
             </div>
-            <h6>Palce Of Supply: {{customer.placeOfSupply}}</h6>
+            <h6>Palce Of Supply: <b>{{customer.placeOfSupply}} </b></h6>
           </div>
         </div>
 
@@ -207,41 +207,38 @@
 
     </div>
 
-    <hr class="">
-
     <div class="container-fluid">
-      <table class="table text-center">
+      <table class="table ">
         <thead>
-          <tr class="bg-info ">
-            <th>Sr.</th>
-            <th>Product Name: </th>
-            <th>HSN Code </th>
-            <th>QTY</th>
-            <th>Rate</th>
-            <th>Total Amount</th>
+          <tr>
+            <th class=" text-center">Sr.</th>
+            <th class=" text-center">Product Name: </th>
+            <th class=" text-center">HSN Code </th>
+            <th class=" text-center">QTY</th>
+            <th class=" text-center">Rate</th>
+            <th class=" text-center"> Total Amount</th>
           </tr>
         </thead>
 
         <tbody>
           <tr *ngFor="let crt of cart; let i = index ">
-            <td>{{i+1}}</td>
+            <td class="text-center">{{i+1}}</td>
             <td>{{crt.productName}}</td>
-            <td>{{crt.hsnCode}}</td>
-            <td>{{crt.qty}}</td>
-            <td>{{crt.rate.toFixed(2)}}</td>
-            <td>{{crt.totalAmount.toFixed(2)}}</td>
+            <td class="text-center">{{crt.hsnCode}}</td>
+            <td class="text-center">{{crt.qty}}</td>
+            <td class="text-center">{{crt.rate.toFixed(2)}}</td>
+            <td class="text-center"> <b>{{crt.totalAmount.toFixed(2)}}</b></td>
           </tr>
         </tbody>
-        <br><br>
       </table>
     </div>
-    <hr>
 
 
-    <div class="row m-1 container-fluid">
+
+    <div class="row ml-1 mr-1 container-fluid">
 
       <div class="col-6 border-price">
-        <h5 class="text-center text-danger">Terms & condisition</h5>
+        <h3 class="text-center "><strong> Terms & condition </strong></h3>
 
 
 
@@ -254,10 +251,10 @@
 
       </div>
       <div class="col-6 text-right  border-price">
-        <h5>GST Tax: {{gst_rate}}%</h5>
-        <h5>Total Amount: {{amount_calcu.total_amount.toFixed(2)}}</h5>
-        <h5>GST Tax Amount: {{amount_calcu.total_gst_amount.toFixed(2)}}</h5>
-        <h5>Total Amount With Tax: {{amount_calcu.total_amount_with_text.toFixed(2)}}</h5>
+        <h5>GST Tax: <b>{{gst_rate}}% </b></h5>
+        <h5>Total Amount: <b> {{amount_calcu.total_amount.toFixed(2)}} </b></h5>
+        <h5>GST Tax Amount: <b> {{amount_calcu.total_gst_amount.toFixed(2)}} </b></h5>
+        <h5>Total Amount With Tax: <b> {{amount_calcu.total_amount_with_text.toFixed(2)}} </b></h5>
       </div>
 
     </div>
@@ -268,9 +265,9 @@
       <h4 class="text-center">Bank Details:</h4>
       <table class="table text-center ">
         <tr>
-          <th>Bank Name: <br> {{bank_data.bank_name}}</th>
-          <th>IFSC Code: <br> {{bank_data.ifsc_code}}</th>
-          <th>Account: <br> {{bank_data.bank_ac}}</th>
+          <th class="text-center">Bank Name: <br> {{bank_data.bank_name}}</th>
+          <th class="text-center">IFSC Code: <br> {{bank_data.ifsc_code}}</th>
+          <th class="text-center">Account: <br> {{bank_data.bank_ac}}</th>
 
         </tr>
       </table>

@@ -16,6 +16,12 @@ export class MyInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
 
+    // const cartData = JSON.parse(localStorage.getItem('cart') || 'null');
+
+    //  if(cartData && cartData != null && cartData != 'null'){
+    //     this.cart = cartData
+    //  }
+
   }
 
 
@@ -26,7 +32,7 @@ export class MyInvoiceComponent implements OnInit {
     company_name: 'KUNDER & COMPANY',
     mobile: '9198152715',
     address: '481/B Chack Dondi, Naini, Prayagraj U. P. India- 211008',
-    deals_in: 'All Type Of Mills, Machinary & Spare Parts',
+    deals_in: 'All Type Of Mills, Machinary, Furnitures, Electronics, Mobiles, Building Materials & Spare Parts',
     department: 'Sales & Service',
     state_code: '09'
   };
@@ -45,9 +51,6 @@ export class MyInvoiceComponent implements OnInit {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false
   };
 
   date = new Intl.DateTimeFormat('en-US', this.options).format(this.ac_date);
@@ -119,6 +122,7 @@ export class MyInvoiceComponent implements OnInit {
         this.newProduct['totalAmount'] = this.newProduct.rate * this.newProduct.qty
 
         this.cart.push({ ...this.newProduct });
+        // localStorage.setItem('cart', JSON.stringify(this.cart));
       }
 
       this.resetForm();
@@ -220,9 +224,6 @@ export class MyInvoiceComponent implements OnInit {
       text-decoration: dotted,underline;
     }
 
-    .company_details{
-      background-color: rgb(211, 204, 204);
-    }
 
 
     .condition{
@@ -267,127 +268,6 @@ export class MyInvoiceComponent implements OnInit {
       printWindow.document.close();
       printWindow.print();
     } else {
-      alert('something is worng..')
-    }
-
-  }
-
-  // Download the invoice as a PDF
-  downloadInvoice1(): void {
-
-
-
-    const pdfWindow = window.open();
-
-    if (pdfWindow) {
-      pdfWindow.document.write(`<html><head>
-      <style>
-
-
-.main-pdf{
-  border: 1px solid rgb(199, 110, 110);
-  /* padding: 5px; */
-}
-
-.company_name {
-
-  font-size: 75px;
-}
-
-.address{
-  font-size: 21px;
-  text-decoration: underline;
-}
-
-.deals{
-  font-size: 20px;
-  text-decoration: underline;
-}
-
-.department{
-  font-size: 20px;
-  font-weight: bold;
-}
-
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-
-.customer_details{
-  /* border: 1px solid black; */
-  padding: 10px;
-  /* background-color: antiquewhite; */
-}
-
-
-.no_border{
-  border: 1px solid white;
-}
-
-.decoration{
-  text-decoration: dotted,underline;
-}
-
-.company_details{
-  background-color: rgb(211, 204, 204);
-}
-
-
-.condition{
-  font-size: 12px;
-  font-weight: bold;
-}
-
-
-.border-customer{
-  border: 1px solid black;
-}
-
-.border-price{
-  border: 1px solid black;
-
-}
-      </style>
-
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-      <link rel="icon" type="image/x-icon" href="favicon.ico">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-
-      <title>Download</title></head><body>`);
-      // console.log(this.invoiceContainer.nativeElement.innerHTML)
-      pdfWindow.document.write(this.invoiceContainer.nativeElement.innerHTML);
-      pdfWindow.document.write(`</body></html>`);
-      pdfWindow.document.close();
-      const pdfData = 'data:application/pdf;base64,' + btoa(pdfWindow.document.documentElement.outerHTML);
-      const downloadLink = this.renderer.createElement('a');
-      this.renderer.setAttribute(downloadLink, 'href', pdfData);
-      this.renderer.setAttribute(downloadLink, 'download', 'invoice.pdf');
-      this.renderer.appendChild(document.body, downloadLink);
-      console.log(document.body)
-      downloadLink.click();
-
-      setTimeout(() => {
-        this.renderer.removeChild(document.body, downloadLink);
-      }, 1000);
-
-    }
-    else {
       alert('something is worng..')
     }
 
@@ -444,9 +324,7 @@ table, th, td {
   text-decoration: dotted,underline;
 }
 
-.company_details{
-  background-color: rgb(211, 204, 204);
-}
+
 
 
 .condition{
@@ -465,24 +343,17 @@ table, th, td {
 }
       </style>
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-      <link rel="icon" type="image/x-icon" href="favicon.ico">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-      <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"></script>
 
       <title>Download</title></head><body>
 

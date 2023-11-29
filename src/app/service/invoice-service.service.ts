@@ -8,12 +8,29 @@ export class InvoiceServiceService {
 
   constructor() { }
 
-  generatePdfFromHtml(htmlContent: string, filename:any): void {
+  // generatePdfFromHtml(htmlContent: string, filename:any): void {
+  //   const element = document.createElement('div');
+  //   element.innerHTML = htmlContent;
+
+  //   html2pdf(element,{
+  //     filename: filename,
+  //   });
+  // }
+
+
+  generatePdfFromHtml(htmlContent: string, filename: any): void {
     const element = document.createElement('div');
     element.innerHTML = htmlContent;
 
-    html2pdf(element,{
-      filename: filename,
+    // Append canvas content to the HTML element
+    const canvas = document.getElementById('div');
+    if (canvas) {
+        element.appendChild(canvas.cloneNode(true));
+    }
+
+    html2pdf(element, {
+        filename: filename,
     });
-  }
+}
+
 }

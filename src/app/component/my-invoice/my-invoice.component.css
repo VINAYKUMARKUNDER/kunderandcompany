@@ -26,16 +26,17 @@
   font-weight: bold;
 }
 
+
+.company_gst{
+  padding-bottom: 5px;
+}
+
 table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
 }
 
-.customer_details{
-  /* border: 1px solid black; */
-  padding: 10px;
-  /* background-color: antiquewhite; */
-}
+
 
 
 .no_border{
@@ -46,9 +47,6 @@ table, th, td {
   text-decoration: dotted,underline;
 }
 
-.company_details{
-  background-color: rgb(227, 209, 209);
-}
 
 
 .condition{
